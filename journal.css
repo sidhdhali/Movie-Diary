@@ -1,0 +1,24 @@
+  body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #journal-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .journal-card {
+            width: 250px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .journal-card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .note-section {
+            margin-top: 10px;
+            text-align: left;
+        }
