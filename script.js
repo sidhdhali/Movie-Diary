@@ -44,3 +44,59 @@ function displayMovies(movies)
     moviesContainer.appendChild(movieCard);
   });
 }
+
+
+function searchMovies(query)
+{
+  fetch(`${path}/search/movie?api_key=${API_KEY}&query=${query}`)
+    .then(response => response.json())
+    .then(data =>
+    {
+      if (data.results.length > 0)
+      {
+        displayMovies(data.results);
+      } else
+      {
+        alert('No movies found for the search query!');
+      }
+    })
+    .catch(error => console.log(error));
+}
+
+
+function addToFavorites(id, title, posterPath)
+{
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  const isAlreadyFavorite = favorites.some(movie => movie.id === id);
+
+  if (!isAlreadyFavorite)
+  {
+    favorites.push({ id, title, posterPath });
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    displayFavorites();
+  } else
+  {
+    alert('This movie is already in your favorites!');
+  }
+}
+
+function displayFavorites()
+{
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  const favoritesContainer = document.getElementById('favorites');
+  favoritesContainer.innerHTML = ''; // Clear previous favorites
+
+  favorites.forEach(movie =>
+  {
+    const movieCard = document.createElement('div');
+    movieCard.className = 'movie-card';
+    movieCard.innerHTML = `
+            <img src="${movie.posterPath}" alt="${movie.title}">
+            <h3>${movie.title}</h3>
+        `;
+    favoritesContainer.appendChild(movieCard);
+  });
+}
+
+// Display favorites on page load
+displayFavorites();
